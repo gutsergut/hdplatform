@@ -4,4 +4,4 @@ API for human discovery methodologies usage
  
 ### Methodologies demo
 
-* [Human design](http://demo.api.hdplatform.io/examples/person.html)
+* [Human design](http://demo.api.hdplatform.io/humandesign/examples/person.html)
