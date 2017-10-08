@@ -1,0 +1,13 @@
+.result-table tr th {
+    text-align: left;
+}
+
+.result-table .title td {
+    background: #F0F0FF;
+}
+
+.result-table tr td {
+    vertical-align: top;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}

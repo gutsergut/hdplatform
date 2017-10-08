@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="example.css"/>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/platform-api.js"></script>
+    <script src="../client-api.js"></script>
+
+
+    <script src="person-renderer.js"></script>
+    <script src="dummy.js"></script>
+</head>
+
+<body>
+
+
+    <script>
+        $( function() {
+
+            var api = new HumanDesignApi();
+
+            $('#personForm').submit( function() {
+
+                api.getFullInfo({
+                    data: {
+                        language: "en",
+                        birthDate: $('#birthDate').val(),
+                        birthTime: $('#birthTime').val(),
+                        latitude: $('#locationLatitude').val(),
+                        longitude: $('#locationLongitude').val(),
+                    },
+                    success: function( data ) {
+                        var renderer = new HumanDesignPersonRenderer();
+                        renderer.render( $('#personInfo'), data.bodygraph );
+                    },
+                    error: function( message ) {
+                        $('#personInfo').html( "<h1>Error</h1>" + message );
+                    }
+                });
+                return false;
+            });
+
+
+            /***********************************************
+            /* Fill list of dummy persons
+             ***********************************************/
+            for (var key in window.personData  ) {
+                var person = window.personData[key];
+                var $li = $('<li>');
+
+                var $el = $("<a href='javascript:void(0)'>");
+                $el.html( person.name );
+                $el.data( 'person', person );
+
+                $el.click( function() {
+                    var person = $(this).data( 'person' );
+
+                    $('#birthDate').val( person.birthDate );
+                    $('#birthTime').val( person.birthTime );
+
+                    googleMapsSelectLocation( person.birthPlace, function() { $('#personForm').submit() } )
+
+                });
+
+                $el.appendTo( $li );
+                $li.appendTo( $('#dummpyPersonList') )
+            }
+
+            /***********************************************
+             /* Select first person from list
+             ***********************************************/
+            $('#dummpyPersonList a').get(0).click()
+        });
+    </script>
+
+    <form id="personForm" style="overflow: hidden">
+        <div style="float: left; width: 250px; margin-right: 20px;">
+
+            <table width="100%" cellspacing="0" cellpadding="10">
+
+                <tr>
+                    <td>
+                        Birth date
+                    </td>
+                    <td>
+                        <input type="text" id="birthDate">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Birth time
+                    </td>
+                    <td>
+                        <input type="text" id="birthTime">
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="2">
+                        Birth place
+                        <br/>
+                        <input type="text" id="locationSelector" style="width: 100%">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Latitude
+                        <br/>
+                        <input type="text" size="10" id="locationLatitude">
+                    </td>
+                    <td>
+                        Longitude
+                        <br/>
+                        <input type="text" size="10"  id="locationLongitude">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button>Calculate</button>
+                    </td>
+                </tr>
+            </table>
+
+            <hr/>
+            Sample data
+
+            <ul id="dummpyPersonList">
+
+            </ul>
+
+
+
+
+
+        </div>
+        <div style="overflow: hidden">
+            <div id="personInfo"></div>
+
+        </div>
+
+
+    </form>
+
+
+<script src="location.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8mqquZ_UBU0zVtiYizvywe0Z1EWbJtEk&language=ru&libraries=places&callback=window.googlePlaceAutocomplete" ></script>
+</body>
+</html>
