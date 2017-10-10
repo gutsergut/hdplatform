@@ -38,12 +38,14 @@
                 var success = function() {
                     var renderer = new HumanDesignPersonRenderer(bodygraph);
                     renderer.render( $('#personInfo') );
+                    $('#personInfo h1').html( $('.person-name').html() )
                 };
                 var error = function( message ) {
                     $('#personInfo').html( "<h1>Error</h1>" + message );
                 };
 
                 bodygraph.loadFullInfo( "en", success, error );
+
 
                 return false;
             });

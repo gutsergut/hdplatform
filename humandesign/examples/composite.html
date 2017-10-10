@@ -47,6 +47,7 @@
             var success = function() {
                 var renderer = new HumanDesignCompositeRenderer(composite);
                 renderer.render( $('#compositeInfo') );
+                $('#compositeInfo h1').html( $('.person1 .person-name').html() + " + " + $('.person2 .person-name').html() )
             };
             var error = function( message ) {
                 $('#compositeInfo').html( "<h1>Error</h1>" + message );
