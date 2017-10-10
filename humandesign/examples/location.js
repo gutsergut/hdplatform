@@ -1,6 +1,6 @@
-window.googlePlaceAutocomplete = function() {
+window.googlePlaceAutocomplete = function( $el ) {
 	autocomplete = new google.maps.places.Autocomplete(
-		(document.getElementById("locationSelector")),{types: ['(cities)']}
+		($el.find(".location-selector").get(0)),{types: ['(cities)']}
 	);
 	autocomplete.addListener('place_changed', function (){
 		place = autocomplete.getPlace();
@@ -8,25 +8,26 @@ window.googlePlaceAutocomplete = function() {
 		if (place.geometry) {
 			lat = place.geometry.location.lat().toString();
 			lng = place.geometry.location.lng().toString();
-			$('#locationLatitude').val(lat)
-			$('#locationLongitude').val(lng)
+			$el.find('.location-latitude').val(lat)
+			$el.find('.location-longitude').val(lng)
 		}
 	});
 };
 
-window.googleMapsSelectLocation = function( locationName, callback ) {
+window.googleMapsSelectLocation = function( $el, locationName, callback ) {
 	var geocoder = new google.maps.Geocoder;
-	$('#locationSelector').val( locationName)
+	$el.find('.location-selector').val( locationName)
 
 	geocoder.geocode({'address': locationName}, function(results, status) {
 
 		if (results[0]) {
 			var searchResult = results[0];
-			$('#locationLatitude').val(searchResult.geometry.location.lat())
-			$('#locationLongitude').val(searchResult.geometry.location.lng())
-			if ( callback ) {
-				setTimeout( function() { callback()  }, 10 );
-			}
+			$el.find('.location-latitude').val(searchResult.geometry.location.lat())
+			$el.find('.location-longitude').val(searchResult.geometry.location.lng())
+			callback();
+			//if ( callback ) {
+			//	setTimeout( function() { callback()  }, 10 );
+			//}
 		}
 	} );
 };

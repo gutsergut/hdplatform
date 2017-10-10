@@ -2,10 +2,10 @@
  * Sample person data renderer
  * @author timurkar
  ***********************/
-var HumanDesignPersonRenderer = function( ) {
+var HumanDesignPersonRenderer = function( bodygraph ) {
 
 	return {
-		render: function( $el, bodygraph ) {
+		render: function( $el ) {
 			$el.empty()
 			$el.html( "<h1>Person design</h1>")
 
@@ -13,18 +13,23 @@ var HumanDesignPersonRenderer = function( ) {
 
 			$('<tr><th>Part</th><th>Value</th><th>Means</th></tr>').appendTo( $table )
 
-			this.addInfo( $table, "Type", bodygraph.type.title, bodygraph.type.description );
-			this.addInfo( $table, "Profile", bodygraph.profile.title, bodygraph.profile.description );
+			var type = bodygraph.getType();
+			this.addInfo( $table, "Type", type.title, type.description );
+
+			var profile = bodygraph.getProfile();
+			this.addInfo( $table, "Profile", profile.title, profile.description );
 
 			this.addTitle( $table, "Channels" );
-			for( var key in bodygraph.channels ) {
-				var channel = bodygraph.channels[key]
+			var channels = bodygraph.getChannels();
+			for( var key in channels ) {
+				var channel = channels[key]
 				this.addInfo( $table, channel.title, channel.annotate, channel.description );
 			}
 
+			var gates = bodygraph.getGates();
 			this.addTitle( $table, "Gates" );
-			for( var key in bodygraph.gates ) {
-				var gate = bodygraph.gates[key]
+			for( var key in gates ) {
+				var gate = gates[key]
 				this.addInfo( $table, gate.title, gate.annotate, gate.description );
 			}
 

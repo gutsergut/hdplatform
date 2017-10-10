@@ -9,6 +9,7 @@
     <script src="../../lib/jquery.min.js"></script>
     <script src="../../lib/platform-api.js"></script>
     <script src="../client-api.js"></script>
+    <script src="../bodygraph.js"></script>
 
 
     <script src="person-renderer.js"></script>
@@ -21,64 +22,45 @@
     <script>
         $( function() {
 
-            var api = new HumanDesignApi();
+            var bodygraph = new BodyGraph();
 
             $('#personForm').submit( function() {
 
-                api.getFullInfo({
-                    data: {
-                        language: "en",
-                        birthDate: $('#birthDate').val(),
-                        birthTime: $('#birthTime').val(),
-                        latitude: $('#locationLatitude').val(),
-                        longitude: $('#locationLongitude').val(),
-                    },
-                    success: function( data ) {
-                        var renderer = new HumanDesignPersonRenderer();
-                        renderer.render( $('#personInfo'), data.bodygraph );
-                    },
-                    error: function( message ) {
-                        $('#personInfo').html( "<h1>Error</h1>" + message );
-                    }
-                });
+                $('#personInfo').html("loading...")
+
+
+                var birthDate = $('.birth-date').val();
+                var birthTime = $('.birth-time').val();
+                var latitude = $('.location-latitude').val();
+                var longitude = $('.location-longitude').val();
+
+                var bodygraph = new BodyGraph( birthDate, birthTime, latitude, longitude );
+                var success = function() {
+                    var renderer = new HumanDesignPersonRenderer(bodygraph);
+                    renderer.render( $('#personInfo') );
+                };
+                var error = function( message ) {
+                    $('#personInfo').html( "<h1>Error</h1>" + message );
+                };
+
+                bodygraph.loadFullInfo( "en", success, error );
+
                 return false;
             });
 
-
-            /***********************************************
-            /* Fill list of dummy persons
-             ***********************************************/
-            for (var key in window.personData  ) {
-                var person = window.personData[key];
-                var $li = $('<li>');
-
-                var $el = $("<a href='javascript:void(0)'>");
-                $el.html( person.name );
-                $el.data( 'person', person );
-
-                $el.click( function() {
-                    var person = $(this).data( 'person' );
-
-                    $('#birthDate').val( person.birthDate );
-                    $('#birthTime').val( person.birthTime );
-
-                    googleMapsSelectLocation( person.birthPlace, function() { $('#personForm').submit() } )
-
-                });
-
-                $el.appendTo( $li );
-                $li.appendTo( $('#dummpyPersonList') )
-            }
+            window.fillElementsWithDummy( $('.person1'))
 
             /***********************************************
              /* Select first person from list
              ***********************************************/
-            $('#dummpyPersonList a').get(0).click()
+            $('.person1 .dummy-list a').get(0).click()
         });
     </script>
 
     <form id="personForm" style="overflow: hidden">
-        <div style="float: left; width: 250px; margin-right: 20px;">
+        <div class="person-block person1">
+
+            <span class="person-name"></span>
 
             <table width="100%" cellspacing="0" cellpadding="10">
 
@@ -87,7 +69,7 @@
                         Birth date
                     </td>
                     <td>
-                        <input type="text" id="birthDate">
+                        <input type="text" class="birth-date">
                     </td>
                 </tr>
 
@@ -96,7 +78,7 @@
                         Birth time
                     </td>
                     <td>
-                        <input type="text" id="birthTime">
+                        <input type="text" class="birth-time">
                     </td>
                 </tr>
 
@@ -105,19 +87,19 @@
                     <td colspan="2">
                         Birth place
                         <br/>
-                        <input type="text" id="locationSelector" style="width: 100%">
+                        <input type="text" class="location-selector" style="width: 100%">
                     </td>
                 </tr>
                 <tr>
                     <td>
                         Latitude
                         <br/>
-                        <input type="text" size="10" id="locationLatitude">
+                        <input type="text" size="10" class="location-latitude">
                     </td>
                     <td>
                         Longitude
                         <br/>
-                        <input type="text" size="10"  id="locationLongitude">
+                        <input type="text" size="10"  class="location-longitude">
                     </td>
                 </tr>
                 <tr>
@@ -130,7 +112,7 @@
             <hr/>
             Sample data
 
-            <ul id="dummpyPersonList">
+            <ul class="dummy-list">
 
             </ul>
 
@@ -148,7 +130,13 @@
     </form>
 
 
+    <script>
+        window.initGoogleAutocompleter = function() {
+            googlePlaceAutocomplete($('#personForm'))
+        }
+    </script>
+
 <script src="location.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8mqquZ_UBU0zVtiYizvywe0Z1EWbJtEk&language=ru&libraries=places&callback=window.googlePlaceAutocomplete" ></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8mqquZ_UBU0zVtiYizvywe0Z1EWbJtEk&language=en&libraries=places&callback=window.initGoogleAutocompleter" ></script>
 </body>
 </html>

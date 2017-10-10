@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="example.css"/>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/platform-api.js"></script>
+    <script src="../client-api.js"></script>
+    <script src="../bodygraph.js"></script>
+    <script src="../composite.js"></script>
+
+
+    <script src="composite-renderer.js"></script>
+    <script src="dummy.js"></script>
+</head>
+
+<body>
+
+
+<script>
+    $( function() {
+
+        var $person1 = $('.person1');
+        var $person2 = $('.person2');
+
+
+        $('#personForm').submit( function() {
+
+            $('#compositeInfo').html("loading...")
+
+            var birthDate1 = $person1.find('.birth-date').val();
+            var birthTime1 = $person1.find('.birth-time').val();
+            var latitude1 = $person1.find('.location-latitude').val();
+            var longitude1 = $person1.find('.location-longitude').val();
+
+            var birthDate2 = $person2.find('.birth-date').val();
+            var birthTime2 = $person2.find('.birth-time').val();
+            var latitude2 = $person2.find('.location-latitude').val();
+            var longitude2 = $person2.find('.location-longitude').val();
+
+            var bodygraph1 = new BodyGraph( birthDate1, birthTime1, latitude1, longitude1 );
+            var bodygraph2 = new BodyGraph( birthDate2, birthTime2, latitude2, longitude2 );
+
+            var success = function() {
+                var renderer = new HumanDesignCompositeRenderer(composite);
+                renderer.render( $('#compositeInfo') );
+            };
+            var error = function( message ) {
+                $('#compositeInfo').html( "<h1>Error</h1>" + message );
+            };
+
+            var composite = new Composite( bodygraph1, bodygraph2 );
+            composite.loadFullInfo( "en", success, error );
+
+
+            return false;
+        });
+
+        window.fillElementsWithDummy( $person1 );
+        window.fillElementsWithDummy( $person2 );
+
+
+        /***********************************************
+         /* Select first person from list
+         ***********************************************/
+        $('.person1 .dummy-list a').get(0).click()
+        $('.person2 .dummy-list a').get(1).click()
+    });
+</script>
+
+<form id="personForm" style="overflow: hidden">
+    <div class="person1 person-block">
+
+        <span class="person-name"></span>
+
+        <table width="100%" cellspacing="0" cellpadding="10">
+
+            <tr>
+                <td>
+                    Birth date
+                </td>
+                <td>
+                    <input type="text" class="birth-date">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Birth time
+                </td>
+                <td>
+                    <input type="text" class="birth-time">
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2">
+                    Birth place
+                    <br/>
+                    <input type="text" class="location-selector" style="width: 100%">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Latitude
+                    <br/>
+                    <input type="text" size="10" class="location-latitude">
+                </td>
+                <td>
+                    Longitude
+                    <br/>
+                    <input type="text" size="10"  class="location-longitude">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn">Calculate</button>
+
+                </td>
+            </tr>
+        </table>
+
+
+
+        <hr/>
+        Sample data
+
+        <ul class="dummy-list">
+
+        </ul>
+
+
+
+
+
+    </div>
+
+
+    <div class="person2 person-block">
+
+        <span class="person-name"></span>
+
+        <table width="100%" cellspacing="0" cellpadding="10">
+
+            <tr>
+                <td>
+                    Birth date
+                </td>
+                <td>
+                    <input type="text" class="birth-date">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Birth time
+                </td>
+                <td>
+                    <input type="text" class="birth-time">
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2">
+                    Birth place
+                    <br/>
+                    <input type="text" class="location-selector" style="width: 100%">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Latitude
+                    <br/>
+                    <input type="text" size="10" class="location-latitude">
+                </td>
+                <td>
+                    Longitude
+                    <br/>
+                    <input type="text" size="10"  class="location-longitude">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn">Calculate</button>
+
+                </td>
+            </tr>
+        </table>
+
+        <hr/>
+        Sample data
+
+        <ul class="dummy-list">
+
+        </ul>
+
+
+
+
+
+    </div>
+
+
+
+    <div style="overflow: hidden">
+        <div id="compositeInfo"></div>
+
+    </div>
+
+
+</form>
+
+
+<script>
+    window.initGoogleAutocompleter = function() {
+        googlePlaceAutocomplete($('#personForm'))
+    }
+</script>
+
+<script src="location.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8mqquZ_UBU0zVtiYizvywe0Z1EWbJtEk&language=en&libraries=places&callback=window.initGoogleAutocompleter" ></script>
+</body>
+</html>
