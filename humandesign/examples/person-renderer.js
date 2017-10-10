@@ -13,6 +13,8 @@ var HumanDesignPersonRenderer = function( bodygraph ) {
 
 			$('<tr><th>Part</th><th>Value</th><th>Means</th></tr>').appendTo( $table )
 
+			this.addTitle( $table, "Common info" );
+
 			var type = bodygraph.getType();
 			this.addInfo( $table, "Type", type.title, type.description );
 

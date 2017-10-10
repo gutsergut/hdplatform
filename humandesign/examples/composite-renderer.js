@@ -11,7 +11,7 @@ var HumanDesignCompositeRenderer = function( composite ) {
 
 			$table = $('<table class="result-table" cellpadding="0" cellspacing="0"/>')
 
-			$('<tr><th width="200">Part</th><th width="200">Value</th><th>Means</th></tr>').appendTo( $table )
+			$('<tr><th width="200">Value</th><th>Means</th></tr>').appendTo( $table )
 
 			this.addTitle( $table, "Biorythms" )
 			var biorythms = composite.getInfo().biorythms;
@@ -28,7 +28,7 @@ var HumanDesignCompositeRenderer = function( composite ) {
 			this.addTitle( $table, "Composition" )
 			this.addInfo( $table, "Defined centers", composite.getInfo().definedCentersCount + " of 9", "" );
 
-			this.addTitle( $table, "Left open centers" );
+			this.addTitle( $table, "Left open centers (potential problems)" );
 			var openCenters = composite.getInfo().openCenters;
 			for( var key in openCenters ) {
 				var center = openCenters[key]
@@ -46,7 +46,7 @@ var HumanDesignCompositeRenderer = function( composite ) {
 
 		},
 		addInfo: function( $el, part, title, description ) {
-			$tr = $( "<tr><td>" + part + "</td><td>" + title + "</td><td>" + description + "</td>" )
+			$tr = $( "<tr><td>" + title + "</td><td>" + description + "</td>" )
 			$tr.appendTo( $el )
 		}
 
