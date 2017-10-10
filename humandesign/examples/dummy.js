@@ -12,10 +12,10 @@ window.personData = [
 window.fillElementsWithDummy = function( $parentEl ) {
 
 	$parentEl.find('input').change( function() {
-		$parentEl.find('.person-name').html( "Custom data" );
-	})
-	$parentEl.find('input').keydown( function() {
-		$parentEl.find('.person-name').html( "Custom data" );
+		if ( $parentEl.find('.person-name').data('setted') ) {
+			$parentEl.find('.person-name').html("");
+			$parentEl.find('.person-name').data('setted', false)
+		}
 	})
 
 	for (var key in window.personData  ) {
@@ -31,7 +31,8 @@ window.fillElementsWithDummy = function( $parentEl ) {
 
 			$parentEl.find('.birth-date').val( person.birthDate );
 			$parentEl.find('.birth-time').val( person.birthTime );
-			$parentEl.find('.person-name').html( person.name );
+			$parentEl.find('.person-name').val( person.name );
+			$parentEl.find('.person-name').data( 'setted', true );
 
 			googleMapsSelectLocation( $parentEl, person.birthPlace, function() { $parentEl.parents('form').submit() } )
 		});

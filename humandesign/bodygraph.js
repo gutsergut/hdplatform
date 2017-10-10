@@ -10,7 +10,7 @@
  *  - gates - main features of person.
  *  - channels (pair of ) - main characteristic of person
  ***********************/
-var BodyGraph = function( birthDate, birthTime, latitude, longitude ) {
+var BodyGraph = function( birthDate, birthTime, latitude, longitude, title ) {
 
 	var humanDesignApi = new HumanDesignApi();
 
@@ -20,6 +20,7 @@ var BodyGraph = function( birthDate, birthTime, latitude, longitude ) {
 		birthTime: birthTime,
 		latitude: latitude,
 		longitude: longitude,
+		title: title,
 		info: {
 			type: null,
 			profile: null,
@@ -58,6 +59,7 @@ var BodyGraph = function( birthDate, birthTime, latitude, longitude ) {
 		},
 		getParams: function () {
 			return {
+				title: this.title,
 				birthDate: this.birthDate,
 				birthTime: this.birthTime,
 				latitude: this.latitude,

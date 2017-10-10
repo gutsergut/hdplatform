@@ -38,7 +38,7 @@
                 var success = function() {
                     var renderer = new HumanDesignPersonRenderer(bodygraph);
                     renderer.render( $('#personInfo') );
-                    $('#personInfo h1').html( $('.person-name').html() )
+                    $('#personInfo h1').html( $('.person-name').val() )
                 };
                 var error = function( message ) {
                     $('#personInfo').html( "<h1>Error</h1>" + message );
@@ -62,9 +62,19 @@
     <form id="personForm" style="overflow: hidden">
         <div class="person-block person1">
 
-            <span class="person-name"></span>
+
 
             <table width="100%" cellspacing="0" cellpadding="10">
+
+
+                <tr>
+                    <td>
+                        Birth date
+                    </td>
+                    <td>
+                        <input class="person-name">
+                    </td>
+                </tr>
 
                 <tr>
                     <td>

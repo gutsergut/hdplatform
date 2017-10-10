@@ -15,9 +15,9 @@ var HumanDesignCompositeRenderer = function( composite ) {
 
 			this.addTitle( $table, "Biorythms" )
 			var biorythms = composite.getInfo().biorythms;
-			this.addInfo( $table, "Emotional compatibility", biorythms.emotion + "%", "" );
-			this.addInfo( $table, "Physical compatibility", biorythms.physical + "%", "" );
-			this.addInfo( $table, "Intellectual compatibility", biorythms.intellect + "%", "" );
+			this.addInfo( $table, "", "Physical compatibility",this.getBar(biorythms.physical, "#8b0000") );
+			this.addInfo( $table, "", "Emotional compatibility", this.getBar(biorythms.emotion, "#8b8fc7") );
+			this.addInfo( $table, "", "Intellectual compatibility",this.getBar(biorythms.intellect, "#006400")  );
 
 			this.addTitle( $table, "Common info" )
 			var tt = composite.getInfo().types;
@@ -39,6 +39,9 @@ var HumanDesignCompositeRenderer = function( composite ) {
 
 			$table.appendTo( $el )
 
+		},
+		getBar: function( value, color ) {
+			return "<div style='width: 100%; height: 20px; border: 1px solid #ccc'><div style='width: " + value + "%; height: 100%; color: white; min-width: 30px; text-align: center; background: " + color + "'>" + value + "%</div></div>"
 		},
 		addTitle: function( $el, title ) {
 			$tr = $( "<tr class='title'><td colspan='3'>" + title + "</td>" )
