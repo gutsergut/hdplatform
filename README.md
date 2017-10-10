@@ -2,6 +2,7 @@
 
 API for human discovery methodologies usage
  
-### Methodologies demo
+### Methodologies example
 
-* [Human design](http://demo.api.hdplatform.io/humandesign/examples/person.html)
+* [Human design - person description](http://demo.api.hdplatform.io/humandesign/examples/person.html)
+* [Human design - match for dating](http://demo.api.hdplatform.io/humandesign/examples/composite.html)
