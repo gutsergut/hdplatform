@@ -8,4 +8,4 @@ API for human discovery methodologies usage
 * [Human design - match for dating](https://demo.hdplatform.io/humandesign/examples/composite.html)
 
 ### Block demo
-* [Biorhythm compatibility](https://demo.hdplatform.io/humandesign/examples/biorhythm.html)
+* [Biorhythm compatibility](https://demo.hdplatform.io/examples/biorhythm.html)
