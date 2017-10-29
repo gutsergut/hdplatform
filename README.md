@@ -4,8 +4,8 @@ API for human discovery methodologies usage
  
 ### API usage demo 
 
-* [Human design - person description](http://demo.api.hdplatform.io/humandesign/examples/person.html)
-* [Human design - match for dating](http://demo.api.hdplatform.io/humandesign/examples/composite.html)
+* [Human design - person description](https://demo.hdplatform.io/humandesign/examples/person.html)
+* [Human design - match for dating](https://demo.hdplatform.io/humandesign/examples/composite.html)
 
 ### Block demo
-* [Biorhythm compatibility](http://demo.api.hdplatform.io/humandesign/examples/biorhythm.html)
+* [Biorhythm compatibility](https://demo.hdplatform.io/humandesign/examples/biorhythm.html)
