@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <script src="../lib/jquery.min.js"></script>
+    <script src="blocks/BiorhythmBlock.js"></script>
+
+    <script>
+        $( function() {
+
+            $('.calc-btn').click( function() {
+
+                var date1 = new Date( $('.date-input-1').val() + " 00:00:00" )
+                var date2 = new Date( $('.date-input-2').val() + " 00:00:00" )
+
+                var block = new BiorhythmBlock();
+                var compatibility = block.calcCompatibility( date1, date2 )
+
+                $('.emotional-compatibility').html( compatibility.emotional )
+                $('.physical-compatibility').html( compatibility.physical )
+                $('.intellect-compatibility').html( compatibility.intellect )
+            })
+
+            $('.calc-btn').click()
+        })
+
+    </script>
+</head>
+
+<body>
+
+<h1>Biorhythm composites</h1>
+
+calculate composites of two person by biorythms. <a target="_blank" href="https://en.wikipedia.org/wiki/Biorhythm">https://en.wikipedia.org/wiki/Biorhythm</a>
+
+<br/><br/>
+
+Person 1 birth date
+<br/>
+<input type="text" size="10"  value="1985.08.20" class="date-input-1">
+
+<br/><br/>
+
+Person 2 birth date
+<br/>
+<input type="text" size="10" value="1985.09.26"  class="date-input-2">
+
+<br/><br/>
+
+<button class="calc-btn" type="button">Calculate</button>
+
+<div class="result">
+    <h3>Compatibility result</h3>
+
+    Emotional composite: <b class="emotional-compatibility"></b>%
+    <br/>
+    Physical composite: <b class="physical-compatibility"></b>%
+    <br/>
+    Intellect composite: <b class="intellect-compatibility"></b>%
+</div>
